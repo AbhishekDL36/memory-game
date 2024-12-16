@@ -1,8 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
-
+import img1 from './soumyojit-sinha-wfHbpiCKtVs-unsplash.jpg'
+import img2 from './quino-al-BlMj6RYy3c0-unsplash.jpg'
+import img3 from './niko-photos-tGTVxeOr_Rs-unsplash.jpg'
 const Cards = () => {
  const [cardsNum, setCardsnum]=   useState(12)
+ const imgObj={
+  images: [
+    img1,img2,img2,img3,img1,img3
+   ]
+ }
 useEffect(()=>{
 switch(cardsNum){
     case 12: document.querySelector('.btn1').style.backgroundColor= "red"
@@ -30,29 +37,20 @@ console.log(cardsNum)
             <button className='btn2 py-[10px] px-[30px] rounded-[20px] text-white text-[20px]' onClick={(e)=>{setCardsnum(16)}}>16</button>
             <button className='btn3 py-[10px] px-[30px] rounded-[20px] text-white text-[20px]' onClick={(e)=>{setCardsnum(20)}}>20</button>
         </div>
-
-        {cardsNum ?
+<div className='grid grid-cols-3'>
+{cardsNum ?
        Array.from({length:cardsNum}).map((card,index)=>{
         return(
-            <p>hey,{index}</p>
+            <div><img src={imgObj.images[index]} className='h-[100px]' /></div>
         )
        })
         : <p></p>
 
 
         }
-<div>1</div>
-<div>2</div>
-<div>3</div>
-<div>4</div>
-<div>5</div>
-<div>6</div>
-<div>7</div>
-<div>8</div>
-<div>9</div>
-<div>10</div>
-<div>11</div>
-<div>12</div>
+</div>
+    
+
     </div>
   );
 }
