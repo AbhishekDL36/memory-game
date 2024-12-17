@@ -8,7 +8,7 @@ import img5 from './Lo-unsplash.jpg'
 import img6 from './christoph-nolte-vfDnY63kY7E-unsplash.jpg'
 const Cards = () => {
  const [cardsNum, setCardsnum]=   useState(12)
- const [isClicked,setIsclicked] = useState([Array(cardsNum).fill(false)])
+ const [isClicked,setIsclicked] = useState(Array(cardsNum).fill(false))
  const imgObj={
   images: [
     img5,img4,img2,img4,img1,img6,img3,img3,img2,img1,img6,img5
