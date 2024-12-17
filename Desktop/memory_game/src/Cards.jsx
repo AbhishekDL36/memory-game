@@ -14,12 +14,12 @@ const Cards = () => {
   imge1:"",
   imge2:""
  })
-const [isSame, setisSame]= useState(false)
- const imgObj={
+
+ const [imgObj,setimgObj]=useState({
   images: [
     img5,img4,img2,img4,img1,img6,img3,img3,img2,img1,img6,img5
    ]
- }
+ })
 
 useEffect(()=>{
 switch(cardsNum){
@@ -39,42 +39,70 @@ switch(cardsNum){
     
 
 }
-let trueCountcards= isClicked.map((card,index)=>card?index:null)
-let trueCount= (isClicked.filter((card)=>card===true)).length
-setCount({...count,
- value: trueCount})
-
-if(trueCount===2){
-let arr=[]
-
- trueCountcards.forEach((card,index)=>{
-  if(trueCountcards[index]!= null){
-arr.push(trueCountcards[index])
-  }
- 
-})
-
- setCount({
-  ...count,
-  imge1: arr[0],
-  imge2: arr[1]
-})
 
 
-}
+},[cardsNum])
 
-
-},[cardsNum,isClicked])
-
-if(count.imge1 !="" && count.imge2 !=""){
-  if(imgObj.images[count.imge1]===imgObj.images[count.imge2]){
-    console.log("matched")
+useEffect(()=>{
+  let trueCountcards= isClicked.map((card,index)=>card?index:null)
+  let trueCount= (isClicked.filter((card)=>card===true)).length
+  setCount({...count,
+   value: trueCount})
+  
+  if(trueCount===2){
+  let arr=[]
+  
+   trueCountcards.forEach((card,index)=>{
+    if(trueCountcards[index]!= null){
+  arr.push(trueCountcards[index])
     }
-}
+   
+  })
+  
+   setCount({
+    ...count,
+    imge1: arr[0],
+    imge2: arr[1]
+  })
+  
+  
+  }
+},[isClicked])
+
+
+
+useEffect(()=>{
+  if(count.imge1 !="" || count.imge2 !=""){
+   
+    if(imgObj.images[count.imge1]===imgObj.images[count.imge2]){
+      console.log("matched")
+     setTimeout(()=>{
+      let imagesObj= [...imgObj.images]
+      imagesObj[count.imge1]=""
+       imagesObj[count.imge2]=""
+       setimgObj({
+         images:[...imagesObj]
+       })
+
+       setCount({
+        value:0,
+        imge1:"",
+        img2:""
+      })  
+     },1000)
+
+     
+      }
+      else{
+        setIsclicked(Array(cardsNum).fill(false))
+      }
+     
+  }
+  
+},[count])
 
   
 
-console.log(count)
 
   return (
     <div>
@@ -84,7 +112,7 @@ console.log(count)
             <button className='btn3 py-[10px] px-[30px] rounded-[20px] text-white text-[20px]' onClick={(e)=>{setCardsnum(20)}}>20</button>
         </div>
 <div className='grid grid-cols-4 w-[900px] mx-auto my-[30px] h-[680px]'>
-{cardsNum ?
+{
        Array.from({length:cardsNum}).map((card,index)=>{
         return(
             <div className='h-[200px] w-[200px]' key={index}>
@@ -100,7 +128,7 @@ console.log(count)
               }</div>
         )
        })
-        : <p></p>
+        
 
 
         }
