@@ -9,11 +9,18 @@ import img6 from './christoph-nolte-vfDnY63kY7E-unsplash.jpg'
 const Cards = () => {
  const [cardsNum, setCardsnum]=   useState(12)
  const [isClicked,setIsclicked] = useState(Array(cardsNum).fill(false))
+ const [count,setCount] = useState({
+  value:0,
+  imge1:"",
+  imge2:""
+ })
+const [isSame, setisSame]= useState(false)
  const imgObj={
   images: [
     img5,img4,img2,img4,img1,img6,img3,img3,img2,img1,img6,img5
    ]
  }
+
 useEffect(()=>{
 switch(cardsNum){
     case 12: document.querySelector('.btn1').style.backgroundColor= "red"
@@ -32,10 +39,43 @@ switch(cardsNum){
     
 
 }
+let trueCountcards= isClicked.map((card,index)=>card?index:null)
+let trueCount= (isClicked.filter((card)=>card===true)).length
+setCount({...count,
+ value: trueCount})
+
+if(trueCount===2){
+let arr=[]
+
+ trueCountcards.forEach((card,index)=>{
+  if(trueCountcards[index]!= null){
+arr.push(trueCountcards[index])
+  }
+ 
+})
+
+ setCount({
+  ...count,
+  imge1: arr[0],
+  imge2: arr[1]
+})
+
+
+}
 
 
 },[cardsNum,isClicked])
-// console.log(cardsNum,isClicked)
+
+if(count.imge1 !="" && count.imge2 !=""){
+  if(imgObj.images[count.imge1]===imgObj.images[count.imge2]){
+    console.log("matched")
+    }
+}
+
+  
+
+console.log(count)
+
   return (
     <div>
         <div className='flex justify-between w-[300px] ml-[500px] mt-[20px]'>
@@ -47,7 +87,7 @@ switch(cardsNum){
 {cardsNum ?
        Array.from({length:cardsNum}).map((card,index)=>{
         return(
-            <div className='h-[200px] w-[200px]'>
+            <div className='h-[200px] w-[200px]' key={index}>
               {
                 isClicked[index]?
                 
