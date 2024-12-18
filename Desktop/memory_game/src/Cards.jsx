@@ -18,6 +18,8 @@ const Cards = () => {
     for16:true,
     for20:true
   })
+
+
   const [count, setCount] = useState({
     value: 0,
     imge1: "",
@@ -105,11 +107,14 @@ const [pairs,setPairs]= useState(0)
      {
           (cardsNum===16 && isLocked.for16 ) || (cardsNum===20 && isLocked.for20)? <p className='pl-[500px] h-[400px] bg-gray-300 pt-[200px] '>Its locked for you , clear previous round first</p>:
 
-          <div className='grid grid-cols-4 w-[900px] mx-auto my-[30px] gap-[40px]'>
+         ( <div className='grid grid-cols-4 w-[900px] mx-auto my-[30px] gap-[40px]'>
      
           {Array.from({ length: cardsNum }).map((_, index) => (
             <div className='h-[200px] w-[200px]' key={index}>
-              {isClicked[index] || imgObj.images[index] === "" ? ( 
+            {
+              (cardsNum===12 && !isLocked.for16 && index===0)? (<button>unlock</button>)
+              
+              :  ( (isClicked[index] || imgObj.images[index] )  === "" ? ( 
                 <img src={imgObj.images[index]} className='h-[200px] w-[200px]' />
               ) : (
                 <p onClick={() => {
@@ -117,10 +122,12 @@ const [pairs,setPairs]= useState(0)
                   newSetindex[index] = true;
                   setIsclicked(newSetindex);
                 }} className='bg-black text-white h-[200px] w-[200px] pl-[60px] pt-[70px]'>click it .!</p>
-              )}
+              )) 
+            }
+            
             </div>
           ))}
-        </div>
+        </div>)
         }
    
     </div>
