@@ -28,13 +28,21 @@ const [pairs,setPairs]= useState(0)
     images: [
       img1, img4, img2,img8,img10, img4,img10, img1, img2, img3, img3,img8,
       img9, img6,img9, img6, 
-      img1, img1,img7,img7
+      img5, img7,img7,img5
     ]
   });
 
   useEffect(() => {
     setIsclicked(Array(cardsNum).fill(false));
-  }, [cardsNum]);
+    if(pairs===6){
+      setLocked({
+        ...isLocked,
+        for16:false
+      })
+    }
+    setCount({ value: 0, imge1: "", imge2: "" });
+    // setIsclicked(Array(cardsNum).fill(false))
+  }, [cardsNum,pairs]);
 
   useEffect(() => {
     const buttons = [document.querySelector('.btn1'), document.querySelector('.btn2'), document.querySelector('.btn3')];
@@ -72,7 +80,7 @@ const [pairs,setPairs]= useState(0)
           // Reset clicked states after a successful match
           setIsclicked(Array(cardsNum).fill(false));
           setCount({ value: 0, imge1: "", imge2: "" });
-        }, 500);
+        }, 2000);
       } else {
         setTimeout(() => {
           let resetClicked = [...isClicked];
